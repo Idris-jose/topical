@@ -5,21 +5,28 @@ import { useInView } from "react-intersection-observer";
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { ref, inView } = useInView({
-        triggerOnce: false, // Allow repeated animations
-        threshold: 0.3, // Trigger when 30% of the element is in view
+        triggerOnce: false,
+        threshold: 0.3,
     });
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
 
-    // Animation variants for the header
+    const handleNavClick = (e, targetId) => {
+        e.preventDefault();
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+            targetElement.scrollIntoView({ behavior: "smooth" });
+        }
+        setIsMenuOpen(false);
+    };
+
     const headerVariants = {
         visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
         hidden: { opacity: 0, y: -50, transition: { duration: 0.6, ease: "easeIn" } },
     };
 
-    // Animation variants for navigation links
     const navLinkVariants = {
         visible: (i) => ({
             opacity: 1,
@@ -29,7 +36,6 @@ export default function Header() {
         hidden: { opacity: 0, y: 20, transition: { duration: 0.5, ease: "easeIn" } },
     };
 
-    // Animation variants for buttons
     const buttonVariants = {
         visible: { opacity: 1, scale: 1, transition: { duration: 0.4, delay: 0.4 } },
         hidden: { opacity: 0, scale: 0.8, transition: { duration: 0.4 } },
@@ -53,23 +59,19 @@ export default function Header() {
                 School Web
             </motion.div>
 
-            {/* Navigation menu */}
             <nav
-                className={`${
-                    isMenuOpen ? "block" : "hidden"
-                } absolute top-16 left-0 w-full bg-white border-t-2 border-[#991F94] p-4 
-                md:flex md:items-center md:justify-center md:static md:w-auto md:p-0 md:bg-transparent md:border-none md:flex-1`}
+                className={`${isMenuOpen ? "block" : "hidden"} absolute top-16 left-0 w-full bg-white border-t-2 border-[#991F94] p-4 md:flex md:items-center md:justify-center md:static md:w-auto md:p-0 md:bg-transparent md:border-none md:flex-1`}
             >
                 <div className="flex flex-col md:flex-row md:gap-4 md:items-center">
                     {["Home", "About", "Offering", "Subjects", "Testimonials"].map((item, index) => (
                         <motion.a
                             key={item}
-                            href="#"
+                            href={`#${item}`}
                             custom={index}
                             animate={(isMenuOpen || window.innerWidth >= 768) && inView ? "visible" : "hidden"}
                             variants={navLinkVariants}
                             className="block py-2 hover:text-gray-400 md:inline"
-                            onClick={() => setIsMenuOpen(false)}
+                            onClick={(e) => handleNavClick(e, `#${item}`)}
                         >
                             {item}
                         </motion.a>
@@ -87,7 +89,6 @@ export default function Header() {
                 </div>
             </nav>
 
-            {/* Desktop button and hamburger menu */}
             <div className="flex items-center">
                 <motion.button
                     animate={inView ? "visible" : "hidden"}

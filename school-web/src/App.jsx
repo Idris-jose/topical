@@ -14,15 +14,29 @@ function App() {
     <div className="flex flex-col min-h-screen">
       <div className="flex-1">
         <Header />
-        <Section1 />
-        <Section2 />
-        <Section3 />
-        <Section4 />
-        <Section5 />
-        <Section6 />
-        <Section7 />
+        <div id='Home'>
+          <Section1 />
+        </div>
+        <div id='About'>
+          <Section2 />
+        </div>
+        <div id='Offering'>
+          <Section3 />
+        </div>
+        <div id='Subjects'>
+          <Section4 />
+        </div>
+        <div id='Testimonials'>
+          <Section5 />
+        </div>
+        <div id='6'>
+          <Section6 />  
+        </div>  
+        <div id='7'>  
+          <Section7 />
+        </div>
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 }
