@@ -1,7 +1,7 @@
-import { useState } from 'react';
+
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import subtract from './assets/subtract.png';
+import image1 from './assets/imagee.png';
 
 export default function Section7() {
     const { ref, inView } = useInView({
@@ -59,7 +59,7 @@ export default function Section7() {
                     visible: { opacity: 1, x: 0, transition: { duration: 0.6, delay: 0.4 } },
                     hidden: { opacity: 0, x: 50, transition: { duration: 0.6 } },
                 }}
-                src={subtract}
+                src={image1}
                 alt="Decorative graphic"
                 className="rounded-t-lg"
             />
